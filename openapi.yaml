@@ -8,8 +8,8 @@ info:
   version: 0.1.0
 
 servers:
-  - url: http://127.0.0.1:5001/amz-server-cb50d/us-central1/app
-    description: Local server
+  - url: https://us-central1-amz-server-cb50d.cloudfunctions.net/app
+    description: Sandbox
 
 tags:
   - name: customer # <--- unique tag name
