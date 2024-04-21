@@ -1,0 +1,1 @@
+- npx redoc-cli --output index.html bundle openapi.yaml

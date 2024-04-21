@@ -1,0 +1,275 @@
+openapi: 3.0.3
+
+info:
+  title: AMZ API
+  description: API for integrations with amz-server.
+  contact:
+    url: git@github.com:Inauon/amz-server.git
+  version: 0.1.0
+
+servers:
+  - url: http://127.0.0.1:5001/amz-server-cb50d/us-central1/app
+    description: Local server
+
+tags:
+  - name: customer # <--- unique tag name
+    description: Operations to manage the customers
+
+paths:
+  "/customer":
+    get:
+      operationId: "customer_findAll"
+      tags: ["customer"]
+      description: Returns all customers
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerFull"
+    post:
+      operationId: "customer_signup"
+      tags: ["customer"]
+      description: Create a new customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customer"
+        required: true
+      responses:
+        "200":
+          description: A customer was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerFull"
+  "/customer/{id}":
+    parameters:
+      - name: id # Must be same as the value in the {}.
+        # Location of the parameter.
+        # Can be `path`, `cookie`, `query` or `header`
+        in: path
+        description: ID of the post
+        # Since this is in the path, the parameter HAS to be required
+        required: true
+        # Defining the type of the parameter
+        schema:
+          # In this case, it is just a string
+          type: string
+    get:
+      operationId: "customer_findById"
+      tags: ["customer"]
+      description: Get a single customer
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerFull"
+        # But this time, you can also get a 404 response,
+        # which is an empty JSON object.
+        "404":
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    put:
+      operationId: "customer_updateById"
+      tags: ["customer"]
+      description: Update a customer
+      security:
+        - authToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customer"
+        required: true
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerFull"
+        "404":
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    delete:
+      operationId: "customer_deleteById"
+      tags: ["customer"]
+      description: Delete a customer
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        # But this time, you can also get a 404 response,
+        # which is an empty JSON object.
+        "404":
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/customer/session":
+    post:
+      operationId: "customer_session"
+      tags: ["customer"]
+      description: Authenticate a customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerCredentials"
+        required: true
+      responses:
+        "200":
+          description: A customer was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerAuthenticate"
+  "/customer/renew":
+    get:
+      operationId: "customer_renew"
+      tags: ["customer"]
+      description: Re-authenticate a customer
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: A customer was created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+components:
+  securitySchemes:
+    authToken:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    customer:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the customer
+        password:
+          type: string
+          description: Password of the customer
+        name:
+          type: string
+          description: Name of the customer
+        surname:
+          type: string
+          description: Surname of the customer
+        birthday:
+          type: string
+          description: Birthday of the customer
+        area_code:
+          type: number
+          description: Area code of the customer
+        number:
+          type: number
+          description: Number of the customer
+        full_number:
+          type: number
+          description: Full of the customer (area code + number)
+    customerFull:
+      type: object
+      properties:
+        id:
+          type: number
+          description: ID of the customer
+        email:
+          type: string
+          description: Email of the customer
+        password:
+          type: string
+          description: Password of the customer
+        name:
+          type: string
+          description: Name of the customer
+        surname:
+          type: string
+          description: Surname of the customer
+        birthday:
+          type: string
+          description: Birthday of the customer
+        area_code:
+          type: number
+          description: Area code of the customer
+        number:
+          type: number
+          description: Number of the customer
+        full_number:
+          type: number
+          description: Full of the customer (area code + number)
+    customerCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the customer (its possible pass full_number instead of)
+        password:
+          type: string
+          description: Password of the customer
+    customerAuthenticate:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            id:
+              type: number
+              description: ID of the customer
+            email:
+              type: string
+              description: Email of the customer
+            password:
+              type: string
+              description: Password of the customer
+            name:
+              type: string
+              description: Name of the customer
+            surname:
+              type: string
+              description: Surname of the customer
+            birthday:
+              type: string
+              description: Birthday of the customer
+            area_code:
+              type: number
+              description: Area code of the customer
+            number:
+              type: number
+              description: Number of the customer
+            full_number:
+              type: number
+              description: Full of the customer (area code + number)
+        session:
+          type: string
+          description: Session token
