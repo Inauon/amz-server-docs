@@ -1,0 +1,19 @@
+{
+  "name": "amz-server-docs",
+  "version": "1.0.0",
+  "description": "amz-server documentation",
+  "main": "index.js",
+  "scripts": {
+    "redoc": "npx @redocly/cli build-docs openapi.yaml --output index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Inauon/amz-server-docs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Inauon/amz-server-docs/issues"
+  },
+  "homepage": "https://github.com/Inauon/amz-server-docs#readme"
+}
