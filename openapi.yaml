@@ -21,6 +21,9 @@ tags:
   - name: coupon
     description: Operations to manage the coupons
 
+  - name: employee
+    description: Operations to manage the employees
+
 paths:
   "/customer":
     get:
@@ -754,6 +757,335 @@ paths:
               schema:
                 type: object
                 properties: {}
+  "/coupon/name/{name}":
+    parameters:
+      - name: name # Must be same as the value in the {}.
+        # Location of the parameter.
+        # Can be `path`, `cookie`, `query` or `header`
+        in: path
+        description: ID of the post
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: "coupon-show-by-name"
+      tags: ["coupon"]
+      description: Get a coupon by name
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/couponFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: coupon not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/coupon/usage/{id}":
+    parameters:
+      - name: id # Must be same as the value in the {}.
+        # Location of the parameter.
+        # Can be `path`, `cookie`, `query` or `header`
+        in: path
+        description: ID of the post
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      operationId: "coupon-usage"
+      tags: ["coupon"]
+      description: Update coupon usage by id
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/couponFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: coupon not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "423":
+          description: coupon exceeded usage limit
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+
+  "/employee":
+    get:
+      operationId: "employee-index"
+      tags: ["employee"]
+      description: Returns all employees
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/employeeFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    post:
+      operationId: "employee-store"
+      tags: ["employee"]
+      description: Create a new employee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employee"
+        required: true
+      responses:
+        "200":
+          description: A employee was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/employeeFull"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/employee/{id}":
+    parameters:
+      - name: id # Must be same as the value in the {}.
+        # Location of the parameter.
+        # Can be `path`, `cookie`, `query` or `header`
+        in: path
+        description: ID of the post
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: "employee-show"
+      tags: ["employee"]
+      description: Get a single employee
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/employeeFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: employee not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    put:
+      operationId: "employee-update"
+      tags: ["employee"]
+      description: Update a employee
+      security:
+        - authToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeeUpdate"
+        required: true
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/employeeFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: employee not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    delete:
+      operationId: "employee-delete"
+      tags: ["employee"]
+      description: Delete a employee
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: employee not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/employee/session":
+    post:
+      operationId: "employee-session"
+      tags: ["employee"]
+      description: Authenticate a customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeeCredentials"
+        required: true
+      responses:
+        "200":
+          description: A employee was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/employeeAuthenticate"
+        "401":
+          description: Unauthorized (invalid credentials)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: employee not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/employee/renew":
+    get:
+      operationId: "employee-renew"
+      tags: ["employee"]
+      description: Re-authenticate a employee
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: A employee was created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: employee not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
 
 components:
   securitySchemes:
@@ -1012,4 +1344,100 @@ components:
           description: Quantity already used of coupon (zero as default)
         percentage:
           type: number
-          description: Percentage of coupon applyable (value in decimal
+          description: Percentage of coupon applyable (value in decimal)
+
+    employee:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: Email of the employee
+        password:
+          type: string
+          description: Password of the employee
+        accout_type:
+          type: string
+          description: Account type of the employee (can be admin or agent)
+        display_name:
+          type: string
+          description: Name and surname of employee
+    employeeFull:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID of the employee
+        code:
+          type: string
+          description: Code of the employee
+        identifier:
+          type: string
+          description: Email of the employee
+        password:
+          type: string
+          description: Password of the employee
+        accout_type:
+          type: string
+          description: Account type of the employee (can be admin or agent)
+        display_name:
+          type: string
+          description: Name and surname of employee
+    employeeUpdate:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Code of the employee
+        identifier:
+          type: string
+          description: Email of the employee
+        password:
+          type: string
+          description: Password of the employee (necessary only when change password passing new_password field)
+        new_passsword:
+          type: string
+          description: New password of the employee (must be pass actual password)
+        accout_type:
+          type: string
+          description: Account type of the employee (can be admin or agent)
+        display_name:
+          type: string
+          description: Name and surname of employee
+    employeeCredentials:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: Identifier of the employee (can be email or number)
+        password:
+          type: string
+          description: Password of the employee
+    employeeAuthenticate:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: ID of the employee
+            code:
+              type: string
+              description: Code of the employee
+            identifier:
+              type: string
+              description: Email of the employee
+            password:
+              type: string
+              description: Password of the employee
+            accout_type:
+              type: string
+              description: Account type of the employee (can be admin or agent)
+        display_name:
+          type: string
+          description: Name and surname of employee
+        session:
+          type: string
+          description: Session token
