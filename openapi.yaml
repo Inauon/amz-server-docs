@@ -16,6 +16,10 @@ tags:
     description: Operations to manage the customers
   - name: customer-address
     description: Operations to manage the customers addresses
+  - name: customer-address-detail
+    description: Operations to manage the detail of customers addresses
+  - name: coupon
+    description: Operations to manage the coupons
 
 paths:
   "/customer":
@@ -296,7 +300,7 @@ paths:
         required: true
       responses:
         "200":
-          description: A customer was created
+          description: A customer-address was created
           content:
             application/json:
               schema:
@@ -345,7 +349,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/applicationError"
         "404":
-          description: Customer not found
+          description: customer-address not found
           content:
             application/json:
               schema:
@@ -383,7 +387,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/applicationError"
         "404":
-          description: Customer not found
+          description: customer-address not found
           content:
             application/json:
               schema:
@@ -416,7 +420,329 @@ paths:
               schema:
                 $ref: "#/components/schemas/applicationError"
         "404":
-          description: Customer not found
+          description: customer-address not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+
+  "/customer-address-detail":
+    post:
+      operationId: "customer-address-detail-store"
+      tags: ["customer-address-detail"]
+      description: Create a new address-detail of single customer
+      security:
+        - authToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressDetail"
+        required: true
+      responses:
+        "200":
+          description: A customer-address-detail was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerAddressDetailFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/customer/address/{id}/detail":
+    parameters:
+      - name: id # Must be same as the value in the {}.
+        # Location of the parameter.
+        # Can be `path`, `cookie`, `query` or `header`
+        in: path
+        description: ID of the post
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: "customer-address-detail-show"
+      tags: ["customer-address-detail"]
+      description: Get a single address-detail of single customer
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerAddressDetailFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: customer-address-detail not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    put:
+      operationId: "customer-address-detail-update"
+      tags: ["customer-address-detail"]
+      description: Update an address-detail of single customer
+      security:
+        - authToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressDetail"
+        required: true
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customerAddressDetailFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: customer-address-detail not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    delete:
+      operationId: "customer-address-detail-delete"
+      tags: ["customer-address-detail"]
+      description: Delete an address-detail of single customer
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: customer-address-detail not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+
+  "/coupon":
+    get:
+      operationId: "coupon-index"
+      tags: ["coupon"]
+      description: Returns all coupons
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/couponFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    post:
+      operationId: "coupon-store"
+      tags: ["coupon"]
+      description: Create a new coupon
+      security:
+        - authToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/coupon"
+        required: true
+      responses:
+        "200":
+          description: A coupon was created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/couponFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/coupon/{id}":
+    parameters:
+      - name: id # Must be same as the value in the {}.
+        # Location of the parameter.
+        # Can be `path`, `cookie`, `query` or `header`
+        in: path
+        description: ID of the post
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: "coupon-show"
+      tags: ["coupon"]
+      description: Get a coupon
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/couponFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: coupon not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    put:
+      operationId: "coupon-update"
+      tags: ["coupon"]
+      description: Update a coupon
+      security:
+        - authToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/coupon"
+        required: true
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/couponFull"
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: coupon not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+    delete:
+      operationId: "coupon"
+      tags: ["coupon"]
+      description: Delete a coupon
+      security:
+        - authToken: []
+      responses:
+        "200":
+          description: All went well
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        "401":
+          description: Unauthorized (invalid or expired token)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/applicationError"
+        "404":
+          description: coupon not found
           content:
             application/json:
               schema:
@@ -604,3 +930,86 @@ components:
         complement:
           type: string
           description: Complement of address
+    customerAddressDetail:
+      type: object
+      properties:
+        document_type:
+          type: string
+          description: Document type can be individual or company
+        document_number:
+          type: number
+          description: Document number according by document type
+        company_name:
+          type: number
+          description: Company name for companies (null as default)
+        tax_free:
+          type: string
+          description: Tax free for companies (false as default)
+        state_registration:
+          type: string
+          description: State registration for companies (null as default)
+    customerAddressDetailFull:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID of the address-detail
+        document_type:
+          type: string
+          description: Document type can be individual or company
+        document_number:
+          type: number
+          description: Document number according by document type
+        company_name:
+          type: number
+          description: Company name for companies (null as default)
+        tax_free:
+          type: string
+          description: Tax free for companies (false as default)
+        state_registration:
+          type: string
+          description: State registration for companies (null as default)
+    coupon:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of coupon (must be unique)
+        validity:
+          type: string
+          description: Validity of coupon (american date format)
+        usable_quantity:
+          type: number
+          description: Usable quantity of coupon
+        quantity_used:
+          type: number
+          description: Quantity already used of coupon (zero as default)
+        percentage:
+          type: number
+          description: Percentage of coupon applyable (value in decimal format)
+    couponFull:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID of coupon
+        code:
+          type: string
+          description: Code of coupon generated automatically
+        name:
+          type: string
+          description: Name of coupon (must be unique)
+        validity:
+          type: string
+          description: Validity of coupon (american date format)
+        usable_quantity:
+          type: number
+          description: Usable quantity of coupon
+        quantity_used:
+          type: number
+          description: Quantity already used of coupon (zero as default)
+        percentage:
+          type: number
+          description: Percentage of coupon applyable (value in decimal
