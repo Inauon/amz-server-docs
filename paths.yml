@@ -1,0 +1,1132 @@
+"/customer":
+  get:
+    operationId: "customer-index"
+    tags: ["customer"]
+    description: Returns all customers
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "customer-store"
+    tags: ["customer"]
+    description: Create a new customer
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customer"
+      required: true
+    responses:
+      "200":
+        description: A customer was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerFull"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "customer-show"
+    tags: ["customer"]
+    description: Get a single customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  put:
+    operationId: "customer-update"
+    tags: ["customer"]
+    description: Update a customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customer"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "customer-delete"
+    tags: ["customer"]
+    description: Delete a customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/session":
+  post:
+    operationId: "customer-session"
+    tags: ["customer"]
+    description: Authenticate a customer
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerCredentials"
+      required: true
+    responses:
+      "200":
+        description: A customer was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAuthenticate"
+      "401":
+        description: Unauthorized (invalid credentials)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/renew":
+  get:
+    operationId: "customer-renew"
+    tags: ["customer"]
+    description: Re-authenticate a customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: A customer was created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/customer-address":
+  get:
+    operationId: "customer-address-index"
+    tags: ["customer-address"]
+    description: Returns all addresses of single customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "customer-address-store"
+    tags: ["customer-address"]
+    description: Create a new address of single customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerAddress"
+      required: true
+    responses:
+      "200":
+        description: A customer-address was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/address/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "customer-address-show"
+    tags: ["customer-address"]
+    description: Get a single address of single customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-address not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  put:
+    operationId: "customer-address-update"
+    tags: ["customer-address"]
+    description: Update an address of single customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerAddress"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-address not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "customer-address-delete"
+    tags: ["customer-address"]
+    description: Delete an address of single customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-address not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/customer-address-detail":
+  post:
+    operationId: "customer-address-detail-store"
+    tags: ["customer-address-detail"]
+    description: Create a new address-detail of single customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerAddressDetail"
+      required: true
+    responses:
+      "200":
+        description: A customer-address-detail was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressDetailFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/address/{id}/detail":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "customer-address-detail-show"
+    tags: ["customer-address-detail"]
+    description: Get a single address-detail of single customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressDetailFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-address-detail not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  put:
+    operationId: "customer-address-detail-update"
+    tags: ["customer-address-detail"]
+    description: Update an address-detail of single customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerAddressDetail"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressDetailFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-address-detail not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "customer-address-detail-delete"
+    tags: ["customer-address-detail"]
+    description: Delete an address-detail of single customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-address-detail not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/coupon":
+  get:
+    operationId: "coupon-index"
+    tags: ["coupon"]
+    description: Returns all coupons
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/couponFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "coupon-store"
+    tags: ["coupon"]
+    description: Create a new coupon
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/coupon"
+      required: true
+    responses:
+      "200":
+        description: A coupon was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/couponFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/coupon/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "coupon-show"
+    tags: ["coupon"]
+    description: Get a coupon
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/couponFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: coupon not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  put:
+    operationId: "coupon-update"
+    tags: ["coupon"]
+    description: Update a coupon
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/coupon"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/couponFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: coupon not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "coupon"
+    tags: ["coupon"]
+    description: Delete a coupon
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: coupon not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/coupon/name/{name}":
+  parameters:
+    - name: name # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "coupon-show-by-name"
+    tags: ["coupon"]
+    description: Get a coupon by name
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/couponFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: coupon not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/coupon/usage/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  put:
+    operationId: "coupon-usage"
+    tags: ["coupon"]
+    description: Update coupon usage by id
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/couponFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: coupon not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "423":
+        description: coupon exceeded usage limit
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/product":
+  get:
+    operationId: "product-index"
+    tags: ["product"]
+    description: Returns all products
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/productFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/product/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "product-show"
+    tags: ["product"]
+    description: Get a product
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/productFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: product not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/employee":
+  get:
+    operationId: "employee-index"
+    tags: ["employee"]
+    description: Returns all employees
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeeFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "employee-store"
+    tags: ["employee"]
+    description: Create a new employee
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/employee"
+      required: true
+    responses:
+      "200":
+        description: A employee was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeeFull"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/employee/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "employee-show"
+    tags: ["employee"]
+    description: Get a single employee
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeeFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: employee not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  put:
+    operationId: "employee-update"
+    tags: ["employee"]
+    description: Update a employee
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/employeeUpdate"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeeFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: employee not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "employee-delete"
+    tags: ["employee"]
+    description: Delete a employee
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: employee not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/employee/session":
+  post:
+    operationId: "employee-session"
+    tags: ["employee"]
+    description: Authenticate a customer
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/employeeCredentials"
+      required: true
+    responses:
+      "200":
+        description: A employee was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeeAuthenticate"
+      "401":
+        description: Unauthorized (invalid credentials)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: employee not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/employee/renew":
+  get:
+    operationId: "employee-renew"
+    tags: ["employee"]
+    description: Re-authenticate a employee
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: A employee was created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: employee not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}

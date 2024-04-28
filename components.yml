@@ -1,0 +1,371 @@
+securitySchemes:
+  authToken:
+    type: apiKey
+    in: header
+    name: Authorization
+schemas:
+  applicationError:
+    type: object
+    properties:
+      error:
+        type: string
+        description: describe error
+  customer:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email of the customer
+      password:
+        type: string
+        description: Password of the customer
+      name:
+        type: string
+        description: Name of the customer
+      surname:
+        type: string
+        description: Surname of the customer
+      birthday:
+        type: string
+        description: Birthday of the customer
+      area_code:
+        type: number
+        description: Area code of the customer
+      number:
+        type: number
+        description: Number of the customer
+      full_number:
+        type: number
+        description: Full of the customer (area_code+number)
+  customerFull:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID of the customer
+      email:
+        type: string
+        description: Email of the customer
+      password:
+        type: string
+        description: Password of the customer
+      name:
+        type: string
+        description: Name of the customer
+      surname:
+        type: string
+        description: Surname of the customer
+      birthday:
+        type: string
+        description: Birthday of the customer
+      area_code:
+        type: number
+        description: Area code of the customer
+      number:
+        type: number
+        description: Number of the customer
+      full_number:
+        type: number
+        description: Full of the customer (area code + number)
+  customerCredentials:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Email of the customer (its possible pass full_number instead of)
+      password:
+        type: string
+        description: Password of the customer
+  customerAuthenticate:
+    type: object
+    properties:
+      customer:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: ID of the customer
+          email:
+            type: string
+            description: Email of the customer
+          password:
+            type: string
+            description: Password of the customer
+          name:
+            type: string
+            description: Name of the customer
+          surname:
+            type: string
+            description: Surname of the customer
+          birthday:
+            type: string
+            description: Birthday of the customer
+          area_code:
+            type: number
+            description: Area code of the customer
+          number:
+            type: number
+            description: Telephone number of the customer
+          full_number:
+            type: number
+            description: Full of the customer (area code + number)
+      session:
+        type: string
+        description: Session token
+  customerAddress:
+    type: object
+    properties:
+      street:
+        type: string
+        description: Street name
+      number:
+        type: number
+        description: Location number
+      zip_code:
+        type: number
+        description: A postal code
+      neighborhood:
+        type: string
+        description: Neighborhood name
+      city:
+        type: string
+        description: City name
+      state:
+        type: number
+        description: State name
+      country:
+        type: number
+        description: Country name
+      complement:
+        type: number
+        description: Complement of address
+  customerAddressFull:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID of the address
+      street:
+        type: string
+        description: Street name
+      number:
+        type: number
+        description: Location number
+      zip_code:
+        type: number
+        description: A postal code
+      neighborhood:
+        type: string
+        description: Neighborhood name
+      city:
+        type: string
+        description: City name
+      state:
+        type: string
+        description: State name
+      country:
+        type: string
+        description: Country name
+      complement:
+        type: string
+        description: Complement of address
+  customerAddressDetail:
+    type: object
+    properties:
+      document_type:
+        type: string
+        description: Document type can be individual or company
+      document_number:
+        type: number
+        description: Document number according by document type
+      company_name:
+        type: number
+        description: Company name for companies (null as default)
+      tax_free:
+        type: string
+        description: Tax free for companies (false as default)
+      state_registration:
+        type: string
+        description: State registration for companies (null as default)
+  customerAddressDetailFull:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID of the address-detail
+      document_type:
+        type: string
+        description: Document type can be individual or company
+      document_number:
+        type: number
+        description: Document number according by document type
+      company_name:
+        type: number
+        description: Company name for companies (null as default)
+      tax_free:
+        type: string
+        description: Tax free for companies (false as default)
+      state_registration:
+        type: string
+        description: State registration for companies (null as default)
+  coupon:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of coupon (must be unique)
+      validity:
+        type: string
+        description: Validity of coupon (american date format)
+      usable_quantity:
+        type: number
+        description: Usable quantity of coupon
+      quantity_used:
+        type: number
+        description: Quantity already used of coupon (zero as default)
+      percentage:
+        type: number
+        description: Percentage of coupon applyable (value in decimal format)
+  couponFull:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID of coupon
+      code:
+        type: string
+        description: Code of coupon generated automatically
+      name:
+        type: string
+        description: Name of coupon (must be unique)
+      validity:
+        type: string
+        description: Validity of coupon (american date format)
+      usable_quantity:
+        type: number
+        description: Usable quantity of coupon
+      quantity_used:
+        type: number
+        description: Quantity already used of coupon (zero as default)
+      percentage:
+        type: number
+        description: Percentage of coupon applyable (value in decimal)
+
+  employee:
+    type: object
+    properties:
+      identifier:
+        type: string
+        description: Email of the employee
+      password:
+        type: string
+        description: Password of the employee
+      accout_type:
+        type: string
+        description: Account type of the employee (can be admin or agent)
+      display_name:
+        type: string
+        description: Name and surname of employee
+  employeeFull:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID of the employee
+      code:
+        type: string
+        description: Code of the employee
+      identifier:
+        type: string
+        description: Email of the employee
+      password:
+        type: string
+        description: Password of the employee
+      accout_type:
+        type: string
+        description: Account type of the employee (can be admin or agent)
+      display_name:
+        type: string
+        description: Name and surname of employee
+  employeeUpdate:
+    type: object
+    properties:
+      code:
+        type: string
+        description: Code of the employee
+      identifier:
+        type: string
+        description: Email of the employee
+      password:
+        type: string
+        description: Password of the employee (necessary only when change password passing new_password field)
+      new_passsword:
+        type: string
+        description: New password of the employee (must be pass actual password)
+      accout_type:
+        type: string
+        description: Account type of the employee (can be admin or agent)
+      display_name:
+        type: string
+        description: Name and surname of employee
+  employeeCredentials:
+    type: object
+    properties:
+      identifier:
+        type: string
+        description: Identifier of the employee (can be email or number)
+      password:
+        type: string
+        description: Password of the employee
+  employeeAuthenticate:
+    type: object
+    properties:
+      customer:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: ID of the employee
+          code:
+            type: string
+            description: Code of the employee
+          identifier:
+            type: string
+            description: Email of the employee
+          password:
+            type: string
+            description: Password of the employee
+          accout_type:
+            type: string
+            description: Account type of the employee (can be admin or agent)
+      display_name:
+        type: string
+        description: Name and surname of employee
+      session:
+        type: string
+        description: Session token
+  productFull:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the product
+      name:
+        type: string
+        description: Name of the product
+      description:
+        type: string
+        description: Description of the product
+      price:
+        type: number
+        description: Price of the product
+      stock_quantity:
+        type: number
+        description: Stock quantity of the product
