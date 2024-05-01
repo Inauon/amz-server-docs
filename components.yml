@@ -10,6 +10,10 @@ schemas:
       error:
         type: string
         description: describe error
+  customers:
+    type: array
+    items:
+      $ref: "#/components/schemas/customerFull"
   customer:
     type: object
     properties:
@@ -114,6 +118,10 @@ schemas:
       session:
         type: string
         description: Session token
+  customerAddresses:
+    type: array
+    items:
+      $ref: "#/components/schemas/customerAddressFull"
   customerAddress:
     type: object
     properties:
@@ -212,6 +220,10 @@ schemas:
       state_registration:
         type: string
         description: State registration for companies (null as default)
+  coupons:
+    type: array
+    items:
+      $ref: "#/components/schemas/couponFull"
   coupon:
     type: object
     properties:
@@ -255,7 +267,10 @@ schemas:
       percentage:
         type: number
         description: Percentage of coupon applyable (value in decimal)
-
+  employees:
+    type: array
+    items:
+      $ref: "#/components/schemas/employeeFull"
   employee:
     type: object
     properties:
@@ -351,6 +366,10 @@ schemas:
       session:
         type: string
         description: Session token
+  products:
+    type: array
+    items:
+      $ref: "#/components/schemas/productFull"
   productFull:
     type: object
     properties:

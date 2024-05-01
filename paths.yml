@@ -11,7 +11,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/customerFull"
+              $ref: "#/components/schemas/customers"
       "401":
         description: Unauthorized (invalid or expired token)
         content:
@@ -235,7 +235,7 @@
               type: object
               properties: {}
 
-"/customer-address":
+"/customer/address":
   get:
     operationId: "customer-address-index"
     tags: ["customer-address"]
@@ -248,7 +248,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/customerAddressFull"
+              $ref: "#/components/schemas/customerAddresses"
       "401":
         description: Unauthorized (invalid or expired token)
         content:
@@ -409,39 +409,6 @@
               type: object
               properties: {}
 
-"/customer-address-detail":
-  post:
-    operationId: "customer-address-detail-store"
-    tags: ["customer-address-detail"]
-    description: Create a new address-detail of single customer
-    security:
-      - authToken: []
-    requestBody:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/customerAddressDetail"
-      required: true
-    responses:
-      "200":
-        description: A customer-address-detail was created
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/customerAddressDetailFull"
-      "401":
-        description: Unauthorized (invalid or expired token)
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "500":
-        description: Internal server error
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
 "/customer/address/{id}/detail":
   parameters:
     - name: id # Must be same as the value in the {}.
@@ -474,6 +441,38 @@
               $ref: "#/components/schemas/applicationError"
       "404":
         description: customer-address-detail not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "customer-address-detail-store"
+    tags: ["customer-address-detail"]
+    description: Create a new address-detail of single customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerAddressDetail"
+      required: true
+    responses:
+      "200":
+        description: A customer-address-detail was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAddressDetailFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
         content:
           application/json:
             schema:
@@ -570,7 +569,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/couponFull"
+              $ref: "#/components/schemas/coupons"
       "401":
         description: Unauthorized (invalid or expired token)
         content:
@@ -836,7 +835,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/productFull"
+              $ref: "#/components/schemas/products"
       "401":
         description: Unauthorized (invalid or expired token)
         content:
@@ -907,7 +906,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/employeeFull"
+              $ref: "#/components/schemas/employees"
       "401":
         description: Unauthorized (invalid or expired token)
         content:
