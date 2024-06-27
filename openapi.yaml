@@ -22,7 +22,8 @@ tags:
     description: Operations to manage the coupons
   - name: product
     description: Operations to manage the products
-
+  - name: product-group
+    description: Operations to manage product groups
   - name: employee
     description: Operations to manage the employees
 

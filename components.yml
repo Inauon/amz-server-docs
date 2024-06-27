@@ -369,7 +369,34 @@ schemas:
   products:
     type: array
     items:
-      $ref: "#/components/schemas/productFull"
+      $ref: "#/components/schemas/product"
+  product:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the product
+      name:
+        type: string
+        description: Name of the product
+      description:
+        type: string
+        description: Description of the product
+      brand:
+        type: number
+        description: Id of the product brand
+      category:
+        type: number
+        description: Id of the product category
+      sub_category:
+        type: number
+        description: Id of the product sub_category
+      price:
+        type: number
+        description: Price of the product
+      stock_quantity:
+        type: number
+        description: Stock quantity of the product
   productFull:
     type: object
     properties:
@@ -382,9 +409,64 @@ schemas:
       description:
         type: string
         description: Description of the product
+      brand:
+        type: object
+        properties:
+          id:
+            type: number
+            description: Id of brand
+          name:
+            type: string
+            description: Name of brand
+      category:
+        type: object
+        properties:
+          id:
+            type: number
+            description: Id of category
+          name:
+            type: string
+            description: Name of category
+      sub_category:
+        type: object
+        properties:
+          id:
+            type: number
+            description: Id of sub_category
+          name:
+            type: string
+            description: Name of sub_category
       price:
         type: number
         description: Price of the product
       stock_quantity:
         type: number
         description: Stock quantity of the product
+  productGroupsFull:
+    type: object
+    properties:
+      brands:
+        type: array
+        items:
+          $ref: "#/components/schemas/productGroupFull"
+      categories:
+        type: array
+        items:
+          $ref: "#/components/schemas/productGroupFull"
+      sub_categories:
+        type: array
+        items:
+          $ref: "#/components/schemas/productGroupFull"
+  productGroups:
+    type: array
+    items:
+      $ref: "#/components/schemas/productGroupFull"
+  productGroupFull:
+    type: object
+    properties:
+      id:
+        type: number
+        description: Id of productGroup
+      name:
+        type: string
+        description: Name of productGroup
