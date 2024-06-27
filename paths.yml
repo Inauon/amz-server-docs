@@ -823,6 +823,19 @@
               properties: {}
 
 "/product":
+  parameters:
+    - in: query
+      name: page
+      schema:
+        type: number
+      required: false
+      description: page of products (default=1)
+    - in: query
+      name: limit
+      schema:
+        type: number
+      required: false
+      description: limit of products on page (default=50)
   get:
     operationId: "product-index"
     tags: ["product"]
@@ -833,7 +846,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/products"
+              $ref: "#/components/schemas/productsFull"
       "500":
         description: Internal server error
         content:
