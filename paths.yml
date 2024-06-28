@@ -836,6 +836,18 @@
         type: number
       required: false
       description: limit of products on page (default=50)
+    - in: query
+      name: search
+      schema:
+        type: number
+      required: false
+      description: filter products by text segment
+    - in: query
+      name: category
+      schema:
+        type: number
+      required: false
+      description: filter products by category
   get:
     operationId: "product-index"
     tags: ["product"]

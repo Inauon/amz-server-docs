@@ -395,9 +395,12 @@ schemas:
       id:
         type: string
         description: ID of the product
-      name:
+      title:
         type: string
-        description: Name of the product
+        description: Title of the product
+      sub_title:
+        type: string
+        description: Sub title of the product
       description:
         type: string
         description: Description of the product
@@ -422,9 +425,12 @@ schemas:
       id:
         type: string
         description: ID of the product
-      name:
+      title:
         type: string
-        description: Name of the product
+        description: Title of the product
+      sub_title:
+        type: string
+        description: Sub title of the product
       description:
         type: string
         description: Description of the product
