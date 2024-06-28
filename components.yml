@@ -40,7 +40,7 @@ schemas:
         description: Number of the customer
       full_number:
         type: number
-        description: Full of the customer (area_code+number)
+        description: Full number of the customer (area_code+number)
   customerFull:
     type: object
     properties:
@@ -71,7 +71,18 @@ schemas:
         description: Number of the customer
       full_number:
         type: number
-        description: Full of the customer (area code + number)
+        description: Full number of the customer (area code + number)
+      cities:
+        type: array
+        items:
+          type: string
+      last_order:
+        type: date
+        description: Last order of customer
+      favorities:
+        type: array
+        items:
+          type: string
   customerCredentials:
     type: object
     properties:
@@ -111,10 +122,21 @@ schemas:
             description: Area code of the customer
           number:
             type: number
-            description: Telephone number of the customer
+            description: Number of the customer
           full_number:
             type: number
-            description: Full of the customer (area code + number)
+            description: Full number of the customer (area code + number)
+          cities:
+            type: array
+            items:
+              type: string
+          last_order:
+            type: date
+            description: Last order of customer
+          favorities:
+            type: array
+            items:
+              type: string
       session:
         type: string
         description: Session token
@@ -366,6 +388,10 @@ schemas:
       session:
         type: string
         description: Session token
+  products:
+    type: array
+    items:
+      $ref: "#/components/schemas/product"
   productsFull:
     type: object
     properties:
@@ -388,7 +414,6 @@ schemas:
       totalPublished:
         type: number
         description: total of products on actual page
-
   product:
     type: object
     properties:
@@ -419,6 +444,9 @@ schemas:
       stock_quantity:
         type: number
         description: Stock quantity of the product
+      is_favorite:
+        type: boolean
+        description: Product is favorited?
   productFull:
     type: object
     properties:
@@ -467,6 +495,9 @@ schemas:
       stock_quantity:
         type: number
         description: Stock quantity of the product
+      is_favorite:
+        type: boolean
+        description: Product is favorited?
   productGroupsFull:
     type: object
     properties:
@@ -495,3 +526,9 @@ schemas:
       name:
         type: string
         description: Name of productGroup
+  customerFavorite:
+    type: object
+    properties:
+      product_id:
+        type: string
+        description: Id of product

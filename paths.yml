@@ -213,8 +213,7 @@
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              $ref: "#/components/schemas/customerAuthenticate"
       "401":
         description: Unauthorized (invalid or expired token)
         content:
@@ -223,6 +222,111 @@
               $ref: "#/components/schemas/applicationError"
       "404":
         description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/customer/favorite":
+  get:
+    operationId: "customer-favorite-index"
+    tags: ["customer-favorite"]
+    description: Returns all customer favorite products
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/products"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "customer-favorite-store"
+    tags: ["customer-favorite"]
+    description: Add new customer favorite product
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerFavorite"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      "400":
+        description: product has already been added
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: product not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/favorite/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: number
+  delete:
+    operationId: "customer-favorite-delete"
+    tags: ["customer-favorite"]
+    description: Delete a customer favorite product
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: product not found
         content:
           application/json:
             schema:
@@ -848,6 +952,12 @@
         type: number
       required: false
       description: filter products by category
+    - in: query
+      name: customer_id
+      schema:
+        type: number
+      required: false
+      description: show products favorited by customer_id
   get:
     operationId: "product-index"
     tags: ["product"]
@@ -859,6 +969,12 @@
           application/json:
             schema:
               $ref: "#/components/schemas/productsFull"
+      "404":
+        description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
       "500":
         description: Internal server error
         content:
