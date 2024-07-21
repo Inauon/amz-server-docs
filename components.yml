@@ -41,6 +41,12 @@ schemas:
       full_number:
         type: number
         description: Full number of the customer (area_code+number)
+      document_type:
+        type: string
+        description: Document type of customer (cpf or cnpj)
+      document:
+        type: string
+        description: Document number of customer
   customerFull:
     type: object
     properties:
@@ -83,6 +89,12 @@ schemas:
         type: array
         items:
           type: string
+      document_type:
+        type: string
+        description: Document type of customer (cpf or cnpj)
+      document:
+        type: string
+        description: Document number of customer
   customerCredentials:
     type: object
     properties:
@@ -137,6 +149,12 @@ schemas:
             type: array
             items:
               type: string
+          document_type:
+            type: string
+            description: Document type of customer (cpf or cnpj)
+          document:
+            type: string
+            description: Document number of customer
       session:
         type: string
         description: Session token
@@ -444,6 +462,9 @@ schemas:
       stock_quantity:
         type: number
         description: Stock quantity of the product
+      image_url:
+        type: string
+        description: Image url of the product
       is_favorite:
         type: boolean
         description: Product is favorited?
@@ -495,6 +516,9 @@ schemas:
       stock_quantity:
         type: number
         description: Stock quantity of the product
+      image_url:
+        type: string
+        description: Image url of the product
       is_favorite:
         type: boolean
         description: Product is favorited?
