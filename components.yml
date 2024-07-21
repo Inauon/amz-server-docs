@@ -95,6 +95,9 @@ schemas:
       document:
         type: string
         description: Document number of customer
+      payment_gateway_id:
+        type: string
+        description: Reference of customer in payment gateway
   customerCredentials:
     type: object
     properties:
@@ -155,6 +158,9 @@ schemas:
           document:
             type: string
             description: Document number of customer
+          payment_gateway_id:
+            type: string
+            description: Reference of customer in payment gateway
       session:
         type: string
         description: Session token
@@ -260,6 +266,58 @@ schemas:
       state_registration:
         type: string
         description: State registration for companies (null as default)
+  customerFavorite:
+    type: object
+    properties:
+      product_id:
+        type: string
+        description: Id of product
+  customerCard:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID of customer-card
+      brand:
+        type: string
+        description: Brand of customer-card
+      last_four_digits:
+        type: string
+        description: Last four digits of customer-card
+      nickname:
+        type: string
+        description: Nickname of customer-card
+      payment_gateway_id:
+        type: strin
+        description: Payment gateway id of customer-card
+  customerCardCreate:
+    type: object
+    properties:
+      number:
+        type: string
+        description: Number of customer-card
+      holder_name:
+        type: string
+        description: Person name of customer-card
+      holder_document:
+        type: string
+        description: Document number of customer-card (cpf or cnpj)
+      exp_month:
+        type: number
+        description: Expiration month of customer-card
+      exp_year:
+        type: number
+        description: Expiration year of customer-card
+      cvv:
+        type: string
+        description: Security code of customer-card
+      billing_address_id:
+        type: string
+        description: Billing address of customer-card (customer-address reference)
+      nickname:
+        type: string
+        description: Nickname of customer-card (optional)
   coupons:
     type: array
     items:
@@ -550,9 +608,3 @@ schemas:
       name:
         type: string
         description: Name of productGroup
-  customerFavorite:
-    type: object
-    properties:
-      product_id:
-        type: string
-        description: Id of product

@@ -234,121 +234,6 @@
               type: object
               properties: {}
 
-"/customer/favorite":
-  get:
-    operationId: "customer-favorite-index"
-    tags: ["customer-favorite"]
-    description: Returns all customer favorite products
-    security:
-      - authToken: []
-    responses:
-      "200":
-        description: All went well
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/products"
-      "401":
-        description: Unauthorized (invalid or expired token)
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "500":
-        description: Internal server error
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-  post:
-    operationId: "customer-favorite-store"
-    tags: ["customer-favorite"]
-    description: Add new customer favorite product
-    security:
-      - authToken: []
-    requestBody:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/customerFavorite"
-      required: true
-    responses:
-      "200":
-        description: All went well
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/product"
-      "400":
-        description: product has already been added
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "401":
-        description: Unauthorized (invalid or expired token)
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "404":
-        description: product not found
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "500":
-        description: Internal server error
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-"/customer/favorite/{id}":
-  parameters:
-    - name: id # Must be same as the value in the {}.
-      # Location of the parameter.
-      # Can be `path`, `cookie`, `query` or `header`
-      in: path
-      description: ID of the post
-      required: true
-      schema:
-        type: string
-        format: number
-  delete:
-    operationId: "customer-favorite-delete"
-    tags: ["customer-favorite"]
-    description: Delete a customer favorite product
-    security:
-      - authToken: []
-    responses:
-      "200":
-        description: All went well
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/product"
-      "401":
-        description: Unauthorized (invalid or expired token)
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "404":
-        description: product not found
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "500":
-        description: Internal server error
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-
 "/customer/address":
   get:
     operationId: "customer-address-index"
@@ -658,6 +543,237 @@
               $ref: "#/components/schemas/applicationError"
       "404":
         description: customer-address-detail not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/customer/favorite":
+  get:
+    operationId: "customer-favorite-index"
+    tags: ["customer-favorite"]
+    description: Returns all customer favorite products
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/products"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "customer-favorite-store"
+    tags: ["customer-favorite"]
+    description: Add new customer favorite product
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerFavorite"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      "400":
+        description: product has already been added
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: product not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/favorite/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: number
+  delete:
+    operationId: "customer-favorite-delete"
+    tags: ["customer-favorite"]
+    description: Delete a customer favorite product
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/product"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: product not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/customer/card":
+  get:
+    operationId: "customer-card-index"
+    tags: ["customer-card"]
+    description: Returns all customer cards
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerCard"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "customer-card-store"
+    tags: ["customer-card"]
+    description: Create new customer card
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerCardCreate"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerCard"
+      "400":
+        description: customer-card already exists
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: billing address not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/card/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  delete:
+    operationId: "customer-card-delete"
+    tags: ["customer-card"]
+    description: Delete a customer-card
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-card not found
         content:
           application/json:
             schema:

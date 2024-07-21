@@ -20,6 +20,8 @@ tags:
     description: Operations to manage the detail of customers addresses
   - name: customer-favorite
     description: Operations to manage the customer favorite products
+  - name: customer-card
+    description: Operations to manage the customer cards
   - name: coupon
     description: Operations to manage the coupons
   - name: product
