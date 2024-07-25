@@ -178,7 +178,7 @@ schemas:
         type: number
         description: Location number
       zip_code:
-        type: number
+        type: string
         description: A postal code
       neighborhood:
         type: string
@@ -187,13 +187,13 @@ schemas:
         type: string
         description: City name
       state:
-        type: number
+        type: string
         description: State name
       country:
-        type: number
+        type: string
         description: Country name
       complement:
-        type: number
+        type: string
         description: Complement of address
   customerAddressFull:
     type: object
@@ -209,7 +209,7 @@ schemas:
         type: number
         description: Location number
       zip_code:
-        type: number
+        type: string
         description: A postal code
       neighborhood:
         type: string
