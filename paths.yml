@@ -1205,6 +1205,8 @@
     operationId: "employee-store"
     tags: ["employee"]
     description: Create a new employee
+    security:
+      - authToken: []
     requestBody:
       content:
         application/json:
@@ -1218,6 +1220,12 @@
           application/json:
             schema:
               $ref: "#/components/schemas/employeeFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
       "500":
         description: Internal server error
         content:
@@ -1399,6 +1407,245 @@
               $ref: "#/components/schemas/applicationError"
       "404":
         description: employee not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/order":
+  parameters:
+    - in: query
+      name: page
+      schema:
+        type: number
+      required: false
+      description: page of products (default=1)
+    - in: query
+      name: limit
+      schema:
+        type: number
+      required: false
+      description: limit of products on page (default=30)
+    - in: query
+      name: status
+      schema:
+        type: string
+      required: false
+      description: filter by order status [waiting, approved, invoice_issuance, in_separation, finished or canceled]
+  get:
+    operationId: "order-index"
+    tags: ["order"]
+    description: Returns all orders
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ordersFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/order/customer":
+  get:
+    operationId: "order-customer-index"
+    tags: ["order"]
+    description: Returns all customer orders
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ordersFullCustomer"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/order/":
+  parameters:
+    - in: query
+      name: coupon
+      schema:
+        type: string
+      required: false
+      description: coupon id to apply discount
+  post:
+    operationId: "order-store"
+    tags: ["order"]
+    description: Create a new order
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/orderStore"
+      required: true
+    responses:
+      "200":
+        description: An order was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/orderFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/order/{id}":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  get:
+    operationId: "order-show"
+    tags: ["order"]
+    description: Get a single order
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/orderFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: order not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "order-delete"
+    tags: ["order"]
+    description: Delete an order
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: order not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/order/{id}/status":
+  parameters:
+    - name: id # Must be same as the value in the {}.
+      # Location of the parameter.
+      # Can be `path`, `cookie`, `query` or `header`
+      in: path
+      description: ID of the post
+      required: true
+      schema:
+        type: string
+        format: uuid
+  put:
+    operationId: "order-status-update"
+    tags: ["order"]
+    description: Update an order status
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/orderStatusUpdate"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/orderFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: order not found
         content:
           application/json:
             schema:

@@ -593,6 +593,13 @@ schemas:
         items:
           $ref: "#/components/schemas/orderItem"
 
+  orderStatusUpdate:
+    type: object
+    properties:
+      status:
+        type: string
+        description: order status (must be => [waiting, approved, invoice_issuance, in_separation, finished or canceled])
+
   orderItem:
     type: object
     properties:
@@ -608,6 +615,34 @@ schemas:
       quantity:
         type: number
         description: quantity of product item
+
+  ordersFull:
+    type: object
+    properties:
+      orders:
+        type: array
+        items:
+          $ref: "#/components/schemas/orderFull"
+      total:
+        type: number
+        description: total of orders
+      limit:
+        type: number
+        description: limit of orders on page
+      page:
+        type: number
+        description: actual page
+      pages:
+        type: number
+        description: total of pages
+      totalPublished:
+        type: number
+        description: total of orders on actual page
+
+  ordersFullCustomer:
+    type: array
+    items:
+      $ref: "#/components/schemas/orderFull"
 
   orderFull:
     type: object
@@ -735,7 +770,7 @@ schemas:
                 type: string
                 description: qr code of pix payment
               qr_code_url:
-                type: number
+                type: string
                 description: qr code url of pix payment
               expires_at:
                 type: string
