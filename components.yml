@@ -39,7 +39,7 @@ schemas:
         type: number
         description: Number of the customer
       full_number:
-        type: number
+        type: string
         description: Full number of the customer (area_code+number)
       document_type:
         type: string
@@ -76,7 +76,7 @@ schemas:
         type: number
         description: Number of the customer
       full_number:
-        type: number
+        type: string
         description: Full number of the customer (area code + number)
       cities:
         type: array
@@ -85,7 +85,7 @@ schemas:
       last_order:
         type: date
         description: Last order of customer
-      favorities:
+      favorites:
         type: array
         items:
           type: string
@@ -526,60 +526,6 @@ schemas:
       is_favorite:
         type: boolean
         description: Product is favorited?
-  productFull:
-    type: object
-    properties:
-      id:
-        type: string
-        description: ID of the product
-      title:
-        type: string
-        description: Title of the product
-      sub_title:
-        type: string
-        description: Sub title of the product
-      description:
-        type: string
-        description: Description of the product
-      brand:
-        type: object
-        properties:
-          id:
-            type: number
-            description: Id of brand
-          name:
-            type: string
-            description: Name of brand
-      category:
-        type: object
-        properties:
-          id:
-            type: number
-            description: Id of category
-          name:
-            type: string
-            description: Name of category
-      sub_category:
-        type: object
-        properties:
-          id:
-            type: number
-            description: Id of sub_category
-          name:
-            type: string
-            description: Name of sub_category
-      price:
-        type: number
-        description: Price of the product
-      stock_quantity:
-        type: number
-        description: Stock quantity of the product
-      image_url:
-        type: string
-        description: Image url of the product
-      is_favorite:
-        type: boolean
-        description: Product is favorited?
   productGroupsFull:
     type: object
     properties:
@@ -608,3 +554,194 @@ schemas:
       name:
         type: string
         description: Name of productGroup
+
+  orderStore:
+    type: object
+    properties:
+      delivery_address_id:
+        type: string
+        format: uuid
+        description: id of customer-address for that order
+      agent_id:
+        type: string
+        format: uuid
+        description: id of employee (agent) for that order
+      observations:
+        type: string
+        description: observations of order (not required)
+      payment:
+        type: object
+        properties:
+          method:
+            type: string
+            description: payment method (credit_card or pix)
+          amount:
+            type: number
+            description: amount of order in cents (without discount)
+          credit_card:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: id of customer-card for that order
+              installments:
+                type: number
+                description: quantity of installments
+      items:
+        type: array
+        items:
+          $ref: "#/components/schemas/orderItem"
+
+  orderItem:
+    type: object
+    properties:
+      code:
+        type: string
+        description: product item code
+      description:
+        type: string
+        description: product item name/desc
+      amount:
+        type: number
+        description: amount of product item in cents (unitary price)
+      quantity:
+        type: number
+        description: quantity of product item
+
+  orderFull:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: id of order
+      code:
+        type: string
+        description: code of order
+      status:
+        type: string
+        description: order status (waiting, approved, invoice_issuance, in_separation, finished, canceled)
+      observations:
+        type: string
+        description: observations of order (not required)
+      created_at:
+        type: string
+        format: date
+        description: date of transaction creation
+      updated_at:
+        type: string
+        format: date
+        description: date of last transaction update
+      order_date:
+        type: string
+        format: date
+        description: date of order created
+      customer:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: customer id
+          email:
+            type: string
+            description: customer email
+          name:
+            type: string
+            description: customer name
+          surname:
+            type: string
+            description: customer surname
+          full_number:
+            type: string
+            description: customer full number (area_code+number)
+          document:
+            type: string
+            description: customer document
+          document_type:
+            type: string
+            description: customer document type (cpf or cnpj)
+      agent:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: employee id
+          code:
+            type: string
+            description: employee code
+          display_name:
+            type: string
+            description: employee full name
+      delivery_address:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: ID of the address
+          street:
+            type: string
+            description: Street name
+          number:
+            type: number
+            description: Location number
+          zip_code:
+            type: string
+            description: A postal code
+          neighborhood:
+            type: string
+            description: Neighborhood name
+          city:
+            type: string
+            description: City name
+          state:
+            type: string
+            description: State name
+          country:
+            type: string
+            description: Country name
+          complement:
+            type: string
+            description: Complement of address
+      payment:
+        type: object
+        properties:
+          method:
+            type: string
+            description: payment method (credit_card or pix)
+          amount:
+            type: number
+            description: amount of order in cents (without discount)
+          coupon:
+            type: number
+            description: discount of amount in cents (not required)
+          credit_card:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: id of customer-card for that order
+              installments:
+                type: number
+                description: quantity of installments
+          pix:
+            type: object
+            properties:
+              qr_code:
+                type: string
+                description: qr code of pix payment
+              qr_code_url:
+                type: number
+                description: qr code url of pix payment
+              expires_at:
+                type: string
+                format: date
+                description: date when qr code will expire
+      items:
+        type: array
+        items:
+          $ref: "#/components/schemas/orderItem"

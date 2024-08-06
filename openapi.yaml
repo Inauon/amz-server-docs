@@ -30,6 +30,8 @@ tags:
     description: Operations to manage product groups
   - name: employee
     description: Operations to manage the employees
+  - name: order
+    description: Operations to manage the order
 
 paths:
   $ref: "paths.yml"
