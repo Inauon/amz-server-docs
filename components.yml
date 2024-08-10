@@ -133,13 +133,13 @@ schemas:
             type: string
             description: Birthday of the customer
           area_code:
-            type: number
+            type: string
             description: Area code of the customer
           number:
-            type: number
+            type: string
             description: Number of the customer
           full_number:
-            type: number
+            type: string
             description: Full number of the customer (area code + number)
           cities:
             type: array
@@ -369,6 +369,11 @@ schemas:
     type: array
     items:
       $ref: "#/components/schemas/employeeFull"
+  employeesSimplified:
+    type: array
+    items:
+      $ref: "#/components/schemas/employeeSimplified"
+
   employee:
     type: object
     properties:
@@ -406,6 +411,21 @@ schemas:
       display_name:
         type: string
         description: Name and surname of employee
+
+  employeeSimplified:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID of the employee
+      code:
+        type: string
+        description: Code of the employee
+      display_name:
+        type: string
+        description: Name and surname of employee
+
   employeeUpdate:
     type: object
     properties:
@@ -750,9 +770,19 @@ schemas:
           amount:
             type: number
             description: amount of order in cents (without discount)
-          coupon:
+          total_amount:
             type: number
-            description: discount of amount in cents (not required)
+            description: total amount of order in cents (with discount)
+          coupon:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: id of coupons
+              discount:
+                type: number
+                description: discount of amount in cents (not required)
           credit_card:
             type: object
             properties:
@@ -760,9 +790,18 @@ schemas:
                 type: string
                 format: uuid
                 description: id of customer-card for that order
+              brand:
+                type: string
+                description: brand of customer-card
+              last_four_digits:
+                type: string
+                description: last four digits of customer-card
               installments:
                 type: number
                 description: quantity of installments
+              nickname:
+                type: string
+                description: nickname of customer-card
           pix:
             type: object
             properties:

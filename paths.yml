@@ -881,6 +881,12 @@
           application/json:
             schema:
               $ref: "#/components/schemas/applicationError"
+      "429":
+        description: coupon exceeded usage limit
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
       "500":
         description: Internal server error
         content:
@@ -991,6 +997,12 @@
               $ref: "#/components/schemas/applicationError"
       "404":
         description: coupon not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "429":
+        description: coupon exceeded usage limit
         content:
           application/json:
             schema:
@@ -1233,6 +1245,34 @@
             schema:
               type: object
               properties: {}
+"/employee/agent":
+  get:
+    operationId: "employee-agent-index"
+    tags: ["employee"]
+    description: Returns all agent employees
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/employeesSimplified"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
 "/employee/{id}":
   parameters:
     - name: id # Must be same as the value in the {}.
@@ -1466,6 +1506,13 @@
               type: object
               properties: {}
 "/order/customer":
+  parameters:
+    - in: query
+      name: status
+      schema:
+        type: string
+      required: false
+      description: filter by order status [waiting, approved, invoice_issuance, in_separation, finished or canceled]
   get:
     operationId: "order-customer-index"
     tags: ["order"]
@@ -1556,39 +1603,6 @@
           application/json:
             schema:
               $ref: "#/components/schemas/orderFull"
-      "401":
-        description: Unauthorized (invalid or expired token)
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "404":
-        description: order not found
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/applicationError"
-      "500":
-        description: Internal server error
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-  delete:
-    operationId: "order-delete"
-    tags: ["order"]
-    description: Delete an order
-    security:
-      - authToken: []
-    responses:
-      "200":
-        description: All went well
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
       "401":
         description: Unauthorized (invalid or expired token)
         content:
