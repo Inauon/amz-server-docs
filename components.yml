@@ -164,6 +164,7 @@ schemas:
       session:
         type: string
         description: Session token
+
   customerAddresses:
     type: array
     items:
@@ -226,6 +227,7 @@ schemas:
       complement:
         type: string
         description: Complement of address
+
   customerAddressDetail:
     type: object
     properties:
@@ -266,12 +268,14 @@ schemas:
       state_registration:
         type: string
         description: State registration for companies (null as default)
+
   customerFavorite:
     type: object
     properties:
       product_id:
         type: string
         description: Id of product
+
   customerCard:
     type: object
     properties:
@@ -318,6 +322,7 @@ schemas:
       nickname:
         type: string
         description: Nickname of customer-card (optional)
+
   coupons:
     type: array
     items:
@@ -365,6 +370,7 @@ schemas:
       percentage:
         type: number
         description: Percentage of coupon applyable (value in decimal)
+
   employees:
     type: array
     items:
@@ -373,7 +379,6 @@ schemas:
     type: array
     items:
       $ref: "#/components/schemas/employeeSimplified"
-
   employee:
     type: object
     properties:
@@ -411,7 +416,6 @@ schemas:
       display_name:
         type: string
         description: Name and surname of employee
-
   employeeSimplified:
     type: object
     properties:
@@ -425,7 +429,6 @@ schemas:
       display_name:
         type: string
         description: Name and surname of employee
-
   employeeUpdate:
     type: object
     properties:
@@ -484,6 +487,7 @@ schemas:
       session:
         type: string
         description: Session token
+
   products:
     type: array
     items:
@@ -546,6 +550,7 @@ schemas:
       is_favorite:
         type: boolean
         description: Product is favorited?
+
   productGroupsFull:
     type: object
     properties:
@@ -612,14 +617,12 @@ schemas:
         type: array
         items:
           $ref: "#/components/schemas/orderItem"
-
   orderStatusUpdate:
     type: object
     properties:
       status:
         type: string
         description: order status (must be => [waiting, approved, invoice_issuance, in_separation, finished or canceled])
-
   orderItem:
     type: object
     properties:
@@ -635,7 +638,6 @@ schemas:
       quantity:
         type: number
         description: quantity of product item
-
   ordersFull:
     type: object
     properties:
@@ -658,12 +660,10 @@ schemas:
       totalPublished:
         type: number
         description: total of orders on actual page
-
   ordersFullCustomer:
     type: array
     items:
       $ref: "#/components/schemas/orderFull"
-
   orderFull:
     type: object
     properties:
@@ -819,3 +819,33 @@ schemas:
         type: array
         items:
           $ref: "#/components/schemas/orderItem"
+
+  customerPaymentsFull:
+    type: array
+    items:
+      $ref: "#/components/schemas/customerPaymentFull"
+  customerPaymentFull:
+    type: object
+    properties:
+      order_id:
+        type: string
+        description: order id
+      order_code:
+        type: string
+        description: order code
+      order_date:
+        type: string
+        format: date
+        description: order date
+      status:
+        type: string
+        description: payment status
+      payment_method:
+        type: string
+        description: payment method
+      total_amount:
+        type: number
+        description: total amount of order (with discount, in cents)
+      card_nickname:
+        type: string
+        description: card nickname (value null when payment method is pix)

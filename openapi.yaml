@@ -32,6 +32,8 @@ tags:
     description: Operations to manage the employees
   - name: order
     description: Operations to manage the order
+  - name: customer-payment
+    description: Operations to manage the customer payments
 
 paths:
   $ref: "paths.yml"

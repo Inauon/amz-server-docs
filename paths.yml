@@ -1671,3 +1671,31 @@
             schema:
               type: object
               properties: {}
+
+"/customer/payment":
+  get:
+    operationId: "customer-payment-index"
+    tags: ["customer-payment"]
+    description: Returns all customer payments
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerPaymentsFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
