@@ -767,12 +767,22 @@ schemas:
           method:
             type: string
             description: payment method (credit_card or pix)
+          status:
+            type: string
+            description: payment status (created, pending, processing, paid, refunded, failed)
+          antifraud_status:
+            type: string
+            description: payment antifraud status (pending, approved, reproved, manual)
           amount:
             type: number
             description: amount of order in cents (without discount)
           total_amount:
             type: number
             description: total amount of order in cents (with discount)
+          paid_at:
+            type: string
+            format: date
+            description: date when order was paid
           coupon:
             type: object
             properties:
@@ -836,16 +846,20 @@ schemas:
       order_date:
         type: string
         format: date
-        description: order date
+        description: date when order was created
       status:
         type: string
-        description: payment status
+        description: payment status (created, pending, processing, paid, refunded, failed)
       payment_method:
         type: string
         description: payment method
       total_amount:
         type: number
         description: total amount of order (with discount, in cents)
+      paid_at:
+        type: string
+        format: date
+        description: date when order was paid
       card_nickname:
         type: string
         description: card nickname (value null when payment method is pix)
