@@ -1699,3 +1699,113 @@
             schema:
               type: object
               properties: {}
+
+"/customer/cart":
+  get:
+    operationId: "customer-cart-show"
+    tags: ["customer-cart"]
+    description: Get a cart of single customer
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerCartFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-cart not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  post:
+    operationId: "customer-cart-store"
+    tags: ["customer-cart"]
+    description: Create a new cart of single customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerCart"
+      required: true
+    responses:
+      "200":
+        description: A customer-cart was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerCartFull"
+      "400":
+        description: customer-cart already exists
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  put:
+    operationId: "customer-cart-update"
+    tags: ["customer-cart"]
+    description: Update a cart of single customer
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerCart"
+      required: true
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerCartFull"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: customer-cart not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}

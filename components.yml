@@ -839,6 +839,7 @@ schemas:
     properties:
       order_id:
         type: string
+        format: uuid
         description: order id
       order_code:
         type: string
@@ -863,3 +864,37 @@ schemas:
       card_nickname:
         type: string
         description: card nickname (value null when payment method is pix)
+
+  customerCartFull:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: cart id
+      amount:
+        type: number
+        description: cart amount (without discount, in cents)
+      discount:
+        type: number
+        description: cart amount discount (in cents)
+      total_amount:
+        type: number
+        description: cart total amount (with discount, in cents)
+      items:
+        type: array
+        items:
+          $ref: "#/components/schemas/orderItem"
+  customerCart:
+    type: object
+    properties:
+      amount:
+        type: number
+        description: cart amount (without discount, in cents)
+      discount:
+        type: number
+        description: cart amount discount (in cents)
+      items:
+        type: array
+        items:
+          $ref: "#/components/schemas/orderItem"
