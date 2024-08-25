@@ -32,6 +32,8 @@ tags:
     description: Operations to manage the employees
   - name: order
     description: Operations to manage the order
+  - name: order-invoice
+    description: Operations to manage the order-invoice
   - name: customer-payment
     description: Operations to manage the customer payments
   - name: customer-cart

@@ -829,6 +829,19 @@ schemas:
         type: array
         items:
           $ref: "#/components/schemas/orderItem"
+      invoice:
+        type: object
+        properties:
+          filename:
+            type: string
+            description: invoice filename
+          expires_at:
+            type: string
+            format: date
+            description: date that invoice url will expire
+          url:
+            type: string
+            description: invoice file url
 
   customerPaymentsFull:
     type: array

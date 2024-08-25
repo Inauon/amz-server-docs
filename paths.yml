@@ -1672,6 +1672,103 @@
               type: object
               properties: {}
 
+"/order/{id}/invoice":
+  parameters:
+    - name: id
+      in: path
+      description: Id of the order
+      required: true
+      schema:
+        type: string
+        format: uuid
+  post:
+    operationId: "order-invoice-store"
+    tags: ["order-invoice"]
+    description: Store an order invoice
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+      required: true
+    responses:
+      "200":
+        description: An order-invoice was stored
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/orderFull"
+      "400":
+        description: order has already an invoice added
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: order not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "order-invoice-delete"
+    tags: ["order-invoice"]
+    description: Delete an order invoice
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "400":
+        description: order without invoice
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: order not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
 "/customer/payment":
   get:
     operationId: "customer-payment-index"
