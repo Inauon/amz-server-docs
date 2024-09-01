@@ -1769,6 +1769,103 @@
               type: object
               properties: {}
 
+"/order/{id}/bill":
+  parameters:
+    - name: id
+      in: path
+      description: Id of the order
+      required: true
+      schema:
+        type: string
+        format: uuid
+  post:
+    operationId: "order-bill-store"
+    tags: ["order-bill"]
+    description: Store order bills
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+      required: true
+    responses:
+      "200":
+        description: An order bills was stored
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/orderFull"
+      "400":
+        description: order does not have payment.method=installment_bill / number of installments are required to add bills / number of installments incompatible with number of attached files
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: order not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  delete:
+    operationId: "order-bill-delete"
+    tags: ["order-bill"]
+    description: Delete order bills
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      "400":
+        description: order does not have payment.method=installment_bill / order without bills
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "404":
+        description: order not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
 "/customer/payment":
   get:
     operationId: "customer-payment-index"

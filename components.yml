@@ -638,6 +638,19 @@ schemas:
       quantity:
         type: number
         description: quantity of product item
+  orderBill:
+    type: object
+    properties:
+      due_date:
+        type: string
+        format: date
+        description: due date of installment bill
+      filename:
+        type: string
+        description: bill filename
+      url:
+        type: string
+        description: url of bill file
   ordersFull:
     type: object
     properties:
@@ -766,10 +779,10 @@ schemas:
         properties:
           method:
             type: string
-            description: payment method (credit_card or pix)
+            description: payment method (credit_card, pix or installment_bill)
           status:
             type: string
-            description: payment status (created, pending, processing, paid, refunded, failed)
+            description: payment status (created, pending, processing, paid or generated_bills, refunded, failed)
           antifraud_status:
             type: string
             description: payment antifraud status (pending, approved, reproved, manual)
@@ -825,6 +838,16 @@ schemas:
                 type: string
                 format: date
                 description: date when qr code will expire
+          installment_bill:
+            type: object
+            properties:
+              installments:
+                type: number
+                description: quantity of installments
+              bills:
+                type: array
+                items:
+                  $ref: "#/components/schemas/orderBill"
       items:
         type: array
         items:
