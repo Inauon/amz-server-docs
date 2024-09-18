@@ -40,6 +40,8 @@ tags:
     description: Operations to manage the customer payments
   - name: customer-cart
     description: Operations to manage the customer cart
+  - name: payment-fee
+    description: Operations to manage the payment fees
 
 paths:
   $ref: "paths.yml"

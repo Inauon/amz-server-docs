@@ -788,10 +788,13 @@ schemas:
             description: payment antifraud status (pending, approved, reproved, manual)
           amount:
             type: number
-            description: amount of order in cents (without discount)
+            description: amount of order in cents (without coupon discount and fee)
+          fee:
+            type: number
+            description: fee of order in cents
           total_amount:
             type: number
-            description: total amount of order in cents (with discount)
+            description: total amount of order in cents (with coupon discount and fee)
           paid_at:
             type: string
             format: date
@@ -822,6 +825,11 @@ schemas:
               installments:
                 type: number
                 description: quantity of installments
+              installment_values:
+                type: array
+                items:
+                  type: number
+                description: values of each installment (in cents)
               nickname:
                 type: string
                 description: nickname of customer-card
@@ -934,3 +942,20 @@ schemas:
         type: array
         items:
           $ref: "#/components/schemas/orderItem"
+
+  creditCardPaymentsFee:
+    type: array
+    items:
+      $ref: "#/components/schemas/creditCardPaymentFee"
+  creditCardPaymentFee:
+    type: object
+    properties:
+      installment:
+        type: number
+        description: installment number (without discount, in cents)
+      value:
+        type: number
+        description: installment value (in cents)
+      total_amount:
+        type: number
+        description: order total amount (in cents)

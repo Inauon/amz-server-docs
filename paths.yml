@@ -2003,3 +2003,44 @@
             schema:
               type: object
               properties: {}
+
+"/payment/fee/credit-card/{amount}":
+  parameters:
+    - name: amount
+      in: path
+      description: amount of order (in cents)
+      required: true
+      schema:
+        type: number
+  get:
+    operationId: "payment-fee-index"
+    tags: ["payment-fee"]
+    description: Get a list of installment options
+    security:
+      - authToken: []
+    responses:
+      "200":
+        description: All went well
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/creditCardPaymentsFee"
+      "400":
+        description: amount invalid
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "401":
+        description: Unauthorized (invalid or expired token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
