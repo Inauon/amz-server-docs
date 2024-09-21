@@ -774,6 +774,28 @@ schemas:
           complement:
             type: string
             description: Complement of address
+          details:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: ID of the address details
+              document_type:
+                type: string
+                description: Customer document type (individual or company)
+              document_number:
+                type: string
+                description: Customer document number
+              company_name:
+                type: string
+                description: Company name (can be null)
+              tax_free:
+                type: boolean
+                description: Tax exemption information (can be null)
+              state_registration:
+                type: string
+                description: State registration (can be null)
       payment:
         type: object
         properties:
