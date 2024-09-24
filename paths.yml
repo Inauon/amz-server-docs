@@ -1894,7 +1894,15 @@
               type: object
               properties: {}
 
-"/customer/cart":
+"/customer/cart/{customerId}":
+  parameters:
+    - name: customerId
+      in: path
+      description: id of customer
+      required: false
+      schema:
+        type: string
+        format: uuid
   get:
     operationId: "customer-cart-show"
     tags: ["customer-cart"]
@@ -1927,6 +1935,7 @@
             schema:
               type: object
               properties: {}
+"/customer/cart":
   post:
     operationId: "customer-cart-store"
     tags: ["customer-cart"]
