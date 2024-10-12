@@ -41,7 +41,7 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/customerFull"
+              $ref: "#/components/schemas/customerAuthenticate"
       "500":
         description: Internal server error
         content:
@@ -222,6 +222,71 @@
               $ref: "#/components/schemas/applicationError"
       "404":
         description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+
+"/customer/session/google":
+  post:
+    operationId: "customer-session-google"
+    tags: ["customer"]
+    description: Authenticate a customer signed with google
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customerGoogleCredential"
+      required: true
+    responses:
+      "200":
+        description: A customer was temporary authenticated
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAuthenticate"
+      "401":
+        description: Unauthorized (invalid token)
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/applicationError"
+      "500":
+        description: Internal server error
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+"/customer/google":
+  put:
+    operationId: "customer-google-complete-register"
+    tags: ["customer"]
+    description: Complete register of a customer signed with google
+    security:
+      - authToken: []
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/customer"
+      required: true
+    responses:
+      "200":
+        description: Customer was created
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customerAuthenticate"
+      "401":
+        description: Unauthorized (invalid or expired token)
         content:
           application/json:
             schema:
@@ -1391,7 +1456,7 @@
   post:
     operationId: "employee-session"
     tags: ["employee"]
-    description: Authenticate a customer
+    description: Authenticate an employee
     requestBody:
       content:
         application/json:
@@ -1400,7 +1465,7 @@
       required: true
     responses:
       "200":
-        description: A employee was created
+        description: An employee was created
         content:
           application/json:
             schema:
@@ -1428,17 +1493,16 @@
   get:
     operationId: "employee-renew"
     tags: ["employee"]
-    description: Re-authenticate a employee
+    description: Re-authenticate an employee
     security:
       - authToken: []
     responses:
       "200":
-        description: A employee was created
+        description: An employee re-authenticated
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              $ref: "#/components/schemas/employeeAuthenticate"
       "401":
         description: Unauthorized (invalid or expired token)
         content:

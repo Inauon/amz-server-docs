@@ -164,6 +164,22 @@ schemas:
       session:
         type: string
         description: Session token
+      metadata:
+        type: object
+        properties:
+          google_account:
+            type: boolean
+            description: customer signed with google account
+          first_access:
+            type: boolean
+            description: customer first sign in
+
+  customerGoogleCredential:
+    type: object
+    properties:
+      token:
+        type: string
+        description: A google sign token
 
   customerAddresses:
     type: array
@@ -462,7 +478,7 @@ schemas:
   employeeAuthenticate:
     type: object
     properties:
-      customer:
+      employee:
         type: object
         properties:
           id:
@@ -472,6 +488,9 @@ schemas:
           code:
             type: string
             description: Code of the employee
+          display_name:
+            type: string
+            description: Name and surname of employee
           identifier:
             type: string
             description: Email of the employee
@@ -481,9 +500,6 @@ schemas:
           accout_type:
             type: string
             description: Account type of the employee (can be admin or agent)
-      display_name:
-        type: string
-        description: Name and surname of employee
       session:
         type: string
         description: Session token
