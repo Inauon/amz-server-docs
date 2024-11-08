@@ -235,6 +235,13 @@
               properties: {}
 
 "/customer/session/third-party":
+  parameters:
+    - in: query
+      name: service
+      schema:
+        type: string
+      required: true
+      description: which third party service (apple or google)
   post:
     operationId: "customer-session-third-party"
     tags: ["customer"]
