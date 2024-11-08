@@ -234,16 +234,16 @@
               type: object
               properties: {}
 
-"/customer/session/google":
+"/customer/session/third-party":
   post:
-    operationId: "customer-session-google"
+    operationId: "customer-session-third-party"
     tags: ["customer"]
-    description: Authenticate a customer signed with google
+    description: Authenticate a customer signed with third-party
     requestBody:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/customerGoogleCredential"
+            $ref: "#/components/schemas/customerThirdPartyCredential"
       required: true
     responses:
       "200":
@@ -265,11 +265,11 @@
             schema:
               type: object
               properties: {}
-"/customer/google":
+"/customer/third-party":
   put:
-    operationId: "customer-google-complete-register"
+    operationId: "customer-third-party-complete-register"
     tags: ["customer"]
-    description: Complete register of a customer signed with google
+    description: Complete register of a customer signed with third-party
     security:
       - authToken: []
     requestBody:

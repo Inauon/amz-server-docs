@@ -167,14 +167,14 @@ schemas:
       metadata:
         type: object
         properties:
-          google_account:
+          third_party_account:
             type: boolean
-            description: customer signed with google account
+            description: customer signed with third party account
           first_access:
             type: boolean
             description: customer first sign in
 
-  customerGoogleCredential:
+  customerThirdPartyCredential:
     type: object
     properties:
       token:
